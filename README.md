@@ -354,7 +354,7 @@ add dst-address=0.0.0.0/0 gateway=172.16.0.1
 1. **Clone repository**
 
    ```bash
-   git clone https://github.com/YourUsername/rtrwnet-network-design.git
+   git clone https://github.com/AhmadSyafiNurroyyan/rtrwnet-network-design
    cd rtrwnet-network-design
    ```
 
@@ -362,8 +362,7 @@ add dst-address=0.0.0.0/0 gateway=172.16.0.1
 
    - Buka GNS3
    - File → Import portable project
-   - Pilih file project dari folder `gns3_project/`
-   - Atau download dari: [https://bit.ly/48Rqi1u](https://bit.ly/48Rqi1u)
+   - Pilih file project dari folder `link_gns3_project.md`
 
 3. **Load Konfigurasi**
 
@@ -482,15 +481,6 @@ Untuk pemahaman mendalam tentang:
 - **Analisis Hasil**: Testing dan troubleshooting
 
 📄 **Lihat**: [`doc/Full_Documentation_Portfolio_RTRWNet.md`](doc/Full_Documentation_Portfolio_RTRWNet.md)
-
-### File Project GNS3
-
-Project simulasi lengkap tersedia dalam dua versi:
-
-- **Versi Lengkap** (~953 MB): Termasuk image MikroTik CHR, siap dijalankan
-- **Versi Ringan** (<1 MB): Hanya struktur topologi
-
-🔗 **Download**: [https://bit.ly/48Rqi1u](https://bit.ly/48Rqi1u)
 
 ---
 
