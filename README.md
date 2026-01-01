@@ -415,7 +415,7 @@ rtrwnet-network-design/
 │   ├── Desain_Topologi_Konseptual.jpg
 │   └── Implementasi_Topologi_GNS3.png
 └── doc/                                   # Dokumentasi lengkap
-    └── Full_Documentation_Portfolio_RTRWNet.md
+    └── Full_Documentation_Portfolio_RTRWNet.pdf
 ```
 
 ---
@@ -480,7 +480,7 @@ Untuk pemahaman mendalam tentang:
 - **Konfigurasi Step-by-Step**: Panduan lengkap dengan screenshot
 - **Analisis Hasil**: Testing dan troubleshooting
 
-📄 **Lihat**: [`doc/Full_Documentation_Portfolio_RTRWNet.md`](doc/Full_Documentation_Portfolio_RTRWNet.md)
+📄 **Lihat**: [`doc/Full_Documentation_Portfolio_RTRWNet.pdf`](doc/Full_Documentation_Portfolio_RTRWNet.pdf)
 
 ---
 
