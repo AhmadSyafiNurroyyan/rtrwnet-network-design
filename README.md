@@ -1,202 +1,202 @@
-# Simulasi Jaringan RT/RW Net Berbasis MikroTik
+# MikroTik-Based RT/RW Net Network Simulation
 
 [![GNS3](https://img.shields.io/badge/GNS3-Network%20Simulator-green)](https://www.gns3.com/)
 [![MikroTik](https://img.shields.io/badge/MikroTik-RouterOS-blue)](https://mikrotik.com/)
 [![License](https://img.shields.io/badge/License-Educational-orange)](https://github.com)
 
-Simulasi infrastruktur jaringan RT/RW Net lengkap menggunakan perangkat MikroTik di GNS3, mendemonstrasikan implementasi wireless backbone Point-to-Point (PtP), manajemen bandwidth dengan PCQ, dan segmentasi VLAN untuk distribusi internet komunitas yang efisien dan terjangkau.
+A comprehensive RT/RW Net network infrastructure simulation using MikroTik devices in GNS3, demonstrating implementation of wireless Point-to-Point (PtP) backbone, PCQ-based bandwidth management, and VLAN segmentation for efficient and affordable community internet distribution.
 
 ---
 
-## 📋 Daftar Isi
+## 📋 Table of Contents
 
-- [Ikhtisar](#ikhtisar)
-- [Arsitektur Jaringan](#arsitektur-jaringan)
-- [Topologi](#topologi)
-- [Fitur Utama](#fitur-utama)
-- [Segmentasi VLAN](#segmentasi-vlan)
-- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
-- [Spesifikasi Perangkat](#spesifikasi-perangkat)
-- [Konfigurasi Perangkat](#konfigurasi-perangkat)
-- [Memulai](#memulai)
-- [Struktur Project](#struktur-project)
-- [Hasil Pengujian](#hasil-pengujian)
-- [Dokumentasi Lengkap](#dokumentasi-lengkap)
-
----
-
-## 🎯 Ikhtisar
-
-Project ini merupakan simulasi perancangan jaringan **RT/RW Net** (Rukun Tetangga/Rukun Warga Network) yang mengimplementasikan best practices dalam distribusi internet komunitas. Terinspirasi dari implementasi nyata RT/RW Net di Indonesia yang memberikan akses internet terjangkau bagi masyarakat, khususnya di daerah dengan keterbatasan infrastruktur.
-
-### Latar Belakang
-
-RT/RW Net pertama kali muncul sekitar tahun 1996 sebagai solusi berbagi biaya internet yang mahal. Konsep ini masih sangat relevan hingga kini, terutama di daerah pelosok yang memerlukan solusi nirkabel untuk mengatasi tantangan geografis seperti perbukitan atau jarak jauh dimana penarikan kabel fiber optik tidak ekonomis.
-
-### Tujuan Project
-
-- **Distribusi Internet Efisien**: Mendistribusikan satu sumber internet ISP ke ~100 pengguna
-- **Wireless Backbone**: Implementasi Point-to-Point (PtP) untuk jarak jauh KOTA → DESA
-- **Manajemen Bandwidth Adil**: Quality of Service (QoS) menggunakan PCQ untuk pembagian bandwidth proporsional
-- **Segmentasi Jaringan**: VLAN untuk memisahkan lalu lintas manajemen dan pengguna
-- **Skalabilitas**: Desain yang mendukung ekspansi pengguna dan area
+- [Overview](#overview)
+- [Network Architecture](#network-architecture)
+- [Topology](#topology)
+- [Key Features](#key-features)
+- [VLAN Segmentation](#vlan-segmentation)
+- [Technologies Used](#technologies-used)
+- [Device Specifications](#device-specifications)
+- [Device Configuration](#device-configuration)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Testing Results](#testing-results)
+- [Complete Documentation](#complete-documentation)
 
 ---
 
-## 🏗️ Arsitektur Jaringan
+## 🎯 Overview
 
-Jaringan dirancang dengan dua lokasi utama yang dihubungkan oleh wireless backbone:
+This project is a comprehensive **RT/RW Net** (Neighborhood Network) simulation that implements best practices in community internet distribution. Inspired by real-world RT/RW Net implementations in Indonesia that provide affordable internet access to communities, particularly in areas with infrastructure limitations.
 
-### **Lokasi KOTA (Sumber Internet)**
+### Background
 
-- **Router Gateway** (MikroTik RB750Gr3): Terminasi koneksi ISP dan NAT
-- **Antenna PtP Transmitter** (MikroTik LHG XL 5ac): Pemancar ke lokasi desa
+RT/RW Net first emerged around 1996 as a solution to share expensive internet costs. This concept remains highly relevant today, especially in remote areas that require wireless solutions to overcome geographical challenges such as hills or long distances where fiber optic cable deployment is not economical.
 
-### **Lokasi DESA (Area Pengguna)**
+### Project Objectives
 
-- **Antenna PtP Receiver** (MikroTik LHG XL 5ac): Penerima dari lokasi kota
-- **Router Inti** (MikroTik RB4011iGS+RM): Pusat manajemen (Routing, DHCP, NAT, QoS)
-- **Core Switch** (Ruijie RG-ES228GS-P): Agregasi dan distribusi VLAN
-- **Aggregation Switches** (Ruijie RG-ES220GS-P): Ekspansi port untuk area pengguna
-- **Base Station** (Ubiquiti Rocket M5 + Sectoral MIMO): Point-to-MultiPoint untuk jangkauan luas
-- **CPE** (Ubiquiti LBE-M5-23): Perangkat di rumah pengguna
-- **AP Indoor** (TP-Link TL-WR840N): Wi-Fi lokal di rumah pengguna
+- **Efficient Internet Distribution**: Distribute a single ISP internet source to ~100 users
+- **Wireless Backbone**: Point-to-Point (PtP) implementation for long-distance CITY → VILLAGE connectivity
+- **Fair Bandwidth Management**: Quality of Service (QoS) using PCQ for proportional bandwidth allocation
+- **Network Segmentation**: VLAN for separating management and user traffic
+- **Scalability**: Design that supports user and area expansion
 
 ---
 
-## 🗺️ Topologi
+## 🏗️ Network Architecture
 
-### Alur Data
+The network is designed with two main locations connected by a wireless backbone:
+
+### **CITY Location (Internet Source)**
+
+- **Gateway Router** (MikroTik RB750Gr3): ISP connection termination and NAT
+- **PtP Transmitter Antenna** (MikroTik LHG XL 5ac): Transmitter to village location
+
+### **VILLAGE Location (User Area)**
+
+- **PtP Receiver Antenna** (MikroTik LHG XL 5ac): Receiver from city location
+- **Core Router** (MikroTik RB4011iGS+RM): Management center (Routing, DHCP, NAT, QoS)
+- **Core Switch** (Ruijie RG-ES228GS-P): VLAN aggregation and distribution
+- **Aggregation Switches** (Ruijie RG-ES220GS-P): Port expansion for user areas
+- **Base Station** (Ubiquiti Rocket M5 + Sectoral MIMO): Point-to-MultiPoint for wide coverage
+- **CPE** (Ubiquiti LBE-M5-23): Customer premises equipment
+- **Indoor AP** (TP-Link TL-WR840N): Local Wi-Fi at user premises
+
+---
+
+## 🗺️ Topology
+
+### Data Flow
 
 ```
-ISP → Router Gateway (KOTA) → PtP Wireless Backbone → Router Inti (DESA)
-    → Core Switch → [Kabel LAN / Wireless PtMP] → User
+ISP → Gateway Router (CITY) → PtP Wireless Backbone → Core Router (VILLAGE)
+    → Core Switch → [LAN Cable / Wireless PtMP] → User
 ```
 
-### Diagram Topologi
+### Topology Diagram
 
-Visualisasi lengkap tersedia dalam folder `diagrams/`:
+Complete visualizations are available in the `diagrams/` folder:
 
-- **Desain Topologi Konseptual** - Blueprint awal desain jaringan
-- **Implementasi Topologi GNS3** - Screenshot implementasi simulasi
+- **Conceptual Topology Design** - Initial network design blueprint
+- **GNS3 Topology Implementation** - Simulation implementation screenshot
 
-### Link Jaringan
+### Network Links
 
-- **Backbone**: Wireless PtP (MikroTik LHG XL 5ac) - KOTA ↔ DESA
-- **Distribusi Kabel**: Switch agregasi untuk pengguna <80m
-- **Distribusi Wireless**: Base Station (Ubiquiti) untuk pengguna >80m
-
----
-
-## ✨ Fitur Utama
-
-### Desain Jaringan
-
-- ✅ **Wireless Backbone**: Link PtP jarak jauh dengan MikroTik LHG
-- ✅ **Bridge Mode**: Layer 2 transparan untuk VLAN traffic
-- ✅ **Segmentasi VLAN**: Pemisahan manajemen dan pengguna
-- ✅ **Dual Distribution**: Kabel (LAN) dan Nirkabel (PtMP)
-
-### Manajemen Bandwidth
-
-- 🚀 **PCQ (Per Connection Queue)**: Pembagian bandwidth otomatis dan adil
-- 🚀 **Simple Queue**: Limitasi bandwidth per subnet pengguna
-- 🚀 **Dynamic Allocation**: Bandwidth dibagi sesuai jumlah pengguna aktif
-- 🚀 **Rasio 1:3**: Download:Upload optimization (560k:186k)
-
-### Layanan & Routing
-
-- 🔄 **DHCP Server**: Alokasi IP otomatis untuk pengguna (VLAN 20)
-- 🔄 **Static Routing**: Routing antar segmen jaringan
-- 🔄 **NAT Masquerade**: Berbagi satu IP publik untuk semua pengguna
-- 🔄 **DNS Server**: Google DNS (8.8.8.8) dan Cloudflare (1.1.1.1)
-
-### Keamanan
-
-- 🔒 **VLAN Isolation**: Pemisahan lalu lintas manajemen dan pengguna
-- 🔒 **Firewall Rules**: Filter dan forward policy
-- 🔒 **Network Segmentation**: Isolasi jaringan logis
+- **Backbone**: Wireless PtP (MikroTik LHG XL 5ac) - CITY ↔ VILLAGE
+- **Cable Distribution**: Aggregation switch for users <80m
+- **Wireless Distribution**: Base Station (Ubiquiti) for users >80m
 
 ---
 
-## 🔧 Segmentasi VLAN
+## ✨ Key Features
 
-Jaringan menggunakan dua VLAN utama yang dikelola oleh Router Inti:
+### Network Design
 
-| VLAN ID | Nama         | Network       | Gateway    | Fungsi                                                          |
-| ------- | ------------ | ------------- | ---------- | --------------------------------------------------------------- |
-| VLAN 10 | Management   | 172.16.0.0/24 | 172.16.0.1 | Jaringan manajemen perangkat (IP statis)                        |
-| VLAN 20 | User Network | 172.16.1.0/24 | 172.16.1.1 | Jaringan pengguna dengan DHCP (Pool: 172.16.1.2 - 172.16.1.254) |
+- ✅ **Wireless Backbone**: Long-distance PtP link with MikroTik LHG
+- ✅ **Bridge Mode**: Layer 2 transparency for VLAN traffic
+- ✅ **VLAN Segmentation**: Separation of management and user traffic
+- ✅ **Dual Distribution**: Cable (LAN) and Wireless (PtMP)
 
-### Alokasi IP Manajemen (VLAN 10)
+### Bandwidth Management
 
-| Perangkat                | IP Address | Lokasi |
-| ------------------------ | ---------- | ------ |
-| Router Inti (RB4011)     | 172.16.0.1 | DESA   |
-| PtP Receiver (LHG #2)    | 172.16.0.2 | DESA   |
-| PtP Transmitter (LHG #1) | 172.16.0.3 | KOTA   |
-| Router Gateway (RB750)   | 172.16.0.4 | KOTA   |
+- 🚀 **PCQ (Per Connection Queue)**: Automatic and fair bandwidth distribution
+- 🚀 **Simple Queue**: Bandwidth limitation per user subnet
+- 🚀 **Dynamic Allocation**: Bandwidth divided according to active user count
+- 🚀 **1:3 Ratio**: Download:Upload optimization (560k:186k)
+
+### Services & Routing
+
+- 🔄 **DHCP Server**: Automatic IP allocation for users (VLAN 20)
+- 🔄 **Static Routing**: Inter-segment network routing
+- 🔄 **NAT Masquerade**: Single public IP shared for all users
+- 🔄 **DNS Server**: Google DNS (8.8.8.8) and Cloudflare (1.1.1.1)
+
+### Security
+
+- 🔒 **VLAN Isolation**: Separation of management and user traffic
+- 🔒 **Firewall Rules**: Filter and forward policies
+- 🔒 **Network Segmentation**: Logical network isolation
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🔧 VLAN Segmentation
 
-### Hardware (Simulasi)
+The network uses two main VLANs managed by the Core Router:
 
-- **MikroTik RB4011iGS+RM**: Router inti dengan 10 port Gigabit
-- **MikroTik RB750Gr3**: Router gateway 5 port untuk terminasi ISP
-- **MikroTik LHG XL 5ac**: Antena PtP dual-chain 27dBi untuk backbone
-- **Ruijie RG-ES228GS-P**: PoE switch 28-port untuk core
-- **Ruijie RG-ES220GS-P**: PoE switch 20-port untuk agregasi
-- **Ubiquiti Rocket M5**: Base station dengan antena sectoral
-- **Ubiquiti LBE-M5-23**: CPE 23dBi untuk client premises
+| VLAN ID | Name         | Network       | Gateway    | Function                                                 |
+| ------- | ------------ | ------------- | ---------- | -------------------------------------------------------- |
+| VLAN 10 | Management   | 172.16.0.0/24 | 172.16.0.1 | Device management network (Static IP)                    |
+| VLAN 20 | User Network | 172.16.1.0/24 | 172.16.1.1 | User network with DHCP (Pool: 172.16.1.2 - 172.16.1.254) |
+
+### Management IP Allocation (VLAN 10)
+
+| Device                   | IP Address | Location |
+| ------------------------ | ---------- | -------- |
+| Core Router (RB4011)     | 172.16.0.1 | VILLAGE  |
+| PtP Receiver (LHG #2)    | 172.16.0.2 | VILLAGE  |
+| PtP Transmitter (LHG #1) | 172.16.0.3 | CITY     |
+| Gateway Router (RB750)   | 172.16.0.4 | CITY     |
+
+---
+
+## 🛠️ Technologies Used
+
+### Hardware (Simulation)
+
+- **MikroTik RB4011iGS+RM**: Core router with 10 Gigabit ports
+- **MikroTik RB750Gr3**: 5-port gateway router for ISP termination
+- **MikroTik LHG XL 5ac**: 27dBi dual-chain PtP antenna for backbone
+- **Ruijie RG-ES228GS-P**: 28-port PoE switch for core
+- **Ruijie RG-ES220GS-P**: 20-port PoE switch for aggregation
+- **Ubiquiti Rocket M5**: Base station with sectoral antenna
+- **Ubiquiti LBE-M5-23**: 23dBi CPE for client premises
 
 ### Software & Platform
 
-- **MikroTik RouterOS**: v7.20 (CHR untuk simulasi)
-- **GNS3**: Platform simulasi dan emulasi jaringan
-- **VMware Workstation**: Hypervisor untuk menjalankan CHR
+- **MikroTik RouterOS**: v7.20 (CHR for simulation)
+- **GNS3**: Network simulation and emulation platform
+- **VMware Workstation**: Hypervisor for running CHR
 
-### Protokol & Teknologi Kunci
+### Key Protocols & Technologies
 
-- **Bridging**: Layer 2 bridge untuk PtP transparency
-- **VLAN (802.1Q)**: Segmentasi jaringan logis
+- **Bridging**: Layer 2 bridge for PtP transparency
+- **VLAN (802.1Q)**: Logical network segmentation
 - **DHCP**: Dynamic Host Configuration Protocol
 - **NAT**: Network Address Translation (Masquerade)
-- **QoS**: Quality of Service dengan PCQ
+- **QoS**: Quality of Service with PCQ
 - **Static Routing**: Inter-VLAN routing
 
 ---
 
-## 💰 Spesifikasi Perangkat
+## 💰 Device Specifications
 
-### Estimasi Biaya Infrastruktur Inti
+### Core Infrastructure Cost Estimation
 
-| No  | Perangkat                      | Qty | Harga Satuan (Rp) | Total (Rp)      |
-| --- | ------------------------------ | --- | ----------------- | --------------- |
-| 1   | MikroTik RB750Gr3              | 1   | 1.020.000         | 1.020.000       |
-| 2   | MikroTik RB4011iGS+RM          | 1   | 4.099.000         | 4.099.000       |
-| 3   | MikroTik LHG XL 5ac            | 2   | 2.109.000         | 4.218.000       |
-| 4   | Tower Triangle                 | 2   | 1.200.000         | 2.400.000       |
-| 5   | Ruijie RG-ES228GS-P (Core)     | 1   | 5.500.000         | 5.500.000       |
-| 6   | Ruijie RG-ES220GS-P (Agregasi) | 2   | 9.011.000         | 18.022.000      |
-| 7   | Sectoral MIMO 20 dBi           | 1   | 3.100.000         | 3.100.000       |
-| 8   | Rocket M5 (Base Station)       | 1   | 831.979           | 831.979         |
-|     |                                |     | **TOTAL INTI**    | **~Rp 39,2 Jt** |
+| No  | Device                            | Qty | Unit Price (IDR) | Total (IDR)       |
+| --- | --------------------------------- | --- | ---------------- | ----------------- |
+| 1   | MikroTik RB750Gr3                 | 1   | 1,020,000        | 1,020,000         |
+| 2   | MikroTik RB4011iGS+RM             | 1   | 4,099,000        | 4,099,000         |
+| 3   | MikroTik LHG XL 5ac               | 2   | 2,109,000        | 4,218,000         |
+| 4   | Tower Triangle                    | 2   | 1,200,000        | 2,400,000         |
+| 5   | Ruijie RG-ES228GS-P (Core)        | 1   | 5,500,000        | 5,500,000         |
+| 6   | Ruijie RG-ES220GS-P (Aggregation) | 2   | 9,011,000        | 18,022,000        |
+| 7   | Sectoral MIMO 20 dBi              | 1   | 3,100,000        | 3,100,000         |
+| 8   | Rocket M5 (Base Station)          | 1   | 831,979          | 831,979           |
+|     |                                   |     | **CORE TOTAL**   | **~IDR 39.2 Mil** |
 
-**Perangkat per Pelanggan** (disesuaikan dengan jumlah pengguna):
+**Per-Customer Equipment** (scaled based on user count):
 
-- Ubiquiti LBE-M5-23 (CPE): ~Rp 1.020.000/unit
-- TP-Link TL-WR840N (AP Indoor): ~Rp 199.000/unit
-- POE Injector 24V: ~Rp 150.000/unit
+- Ubiquiti LBE-M5-23 (CPE): ~IDR 1,020,000/unit
+- TP-Link TL-WR840N (Indoor AP): ~IDR 199,000/unit
+- POE Injector 24V: ~IDR 150,000/unit
 
 ---
 
-## 📝 Konfigurasi Perangkat
+## 📝 Device Configuration
 
-### 1️⃣ MikroTik RB4011iGS+RM (Router Inti - Otak Jaringan)
+### 1️⃣ MikroTik RB4011iGS+RM (Core Router - Network Brain)
 
-**Fungsi**: Pusat manajemen jaringan di sisi DESA
+**Function**: Network management center at VILLAGE side
 
 ```routeros
 # Interface VLAN
@@ -233,13 +233,13 @@ add name="bandwidth-management" target=172.16.1.0/24 \
 add dst-address=0.0.0.0/0 gateway=172.16.0.4
 ```
 
-**Konfigurasi Lengkap**: [`configs/MikroTik-RB4011iGS+RM-1.rsc`](configs/MikroTik-RB4011iGS+RM-1.rsc)
+**Complete Configuration**: [`configs/MikroTik-RB4011iGS+RM-1.rsc`](configs/MikroTik-RB4011iGS+RM-1.rsc)
 
 ---
 
-### 2️⃣ MikroTik RB750Gr3 (Router Gateway - Terminasi ISP)
+### 2️⃣ MikroTik RB750Gr3 (Gateway Router - ISP Termination)
 
-**Fungsi**: Gateway ke ISP di sisi KOTA
+**Function**: ISP gateway at CITY side
 
 ```routeros
 # DHCP Client ke ISP
@@ -259,15 +259,15 @@ add chain=srcnat action=masquerade out-interface=ether1
 set servers=8.8.8.8,1.1.1.1 allow-remote-requests=yes
 ```
 
-**Konfigurasi Lengkap**: [`configs/MikroTik-RB750Gr3.rsc`](configs/MikroTik-RB750Gr3.rsc)
+**Complete Configuration**: [`configs/MikroTik-RB750Gr3.rsc`](configs/MikroTik-RB750Gr3.rsc)
 
 ---
 
 ### 3️⃣ MikroTik LHG XL 5ac (Point-to-Point Backbone)
 
-**Fungsi**: Wireless backbone KOTA ↔ DESA (Bridge Mode Layer 2)
+**Function**: Wireless backbone CITY ↔ VILLAGE (Layer 2 Bridge Mode)
 
-#### **LHG #1 - Transmitter (KOTA)**
+#### **LHG #1 - Transmitter (CITY)**
 
 ```routeros
 # Bridge Interface
@@ -287,9 +287,9 @@ add address=172.16.0.3/24 interface=bridge-ptp
 add dst-address=0.0.0.0/0 gateway=172.16.0.1
 ```
 
-**Konfigurasi Lengkap**: [`configs/MikroTik-LHGXL5ac-1.rsc`](configs/MikroTik-LHGXL5ac-1.rsc)
+**Complete Configuration**: [`configs/MikroTik-LHGXL5ac-1.rsc`](configs/MikroTik-LHGXL5ac-1.rsc)
 
-#### **LHG #2 - Receiver (DESA)**
+#### **LHG #2 - Receiver (VILLAGE)**
 
 ```routeros
 # Bridge Interface
@@ -309,7 +309,7 @@ add address=172.16.0.2/24 interface=bridge-ptp
 add dst-address=0.0.0.0/0 gateway=172.16.0.1
 ```
 
-**Konfigurasi Lengkap**: [`configs/MikroTik-LHGXL5ac-2.rsc`](configs/MikroTik-LHGXL5ac-2.rsc)
+**Complete Configuration**: [`configs/MikroTik-LHGXL5ac-2.rsc`](configs/MikroTik-LHGXL5ac-2.rsc)
 
 ---
 
@@ -317,39 +317,39 @@ add dst-address=0.0.0.0/0 gateway=172.16.0.1
 
 **Core Switch (Ruijie RG-ES228GS-P)**
 
-- Port ke Router Inti: **Trunk** (VLAN 10, 20)
-- Port ke PtP Antenna: **Access VLAN 10**
-- Port ke Base Station: **Trunk** (VLAN 10, 20)
-- Port ke Aggregation Switch: **Access VLAN 20**
-- Port ke User Kabel: **Access VLAN 20**
+- Port to Core Router: **Trunk** (VLAN 10, 20)
+- Port to PtP Antenna: **Access VLAN 10**
+- Port to Base Station: **Trunk** (VLAN 10, 20)
+- Port to Aggregation Switch: **Access VLAN 20**
+- Port to Cable User: **Access VLAN 20**
 
 **Aggregation Switch (Ruijie RG-ES220GS-P)**
 
-- Semua port: **Access VLAN 20** (khusus untuk user)
+- All ports: **Access VLAN 20** (dedicated for users)
 
 ---
 
-## 🚀 Memulai
+## 🚀 Getting Started
 
-### Prasyarat
+### Prerequisites
 
-1. **GNS3** (Versi 2.2+)
+1. **GNS3** (Version 2.2+)
 
    ```bash
-   # Download dari https://www.gns3.com/software/download
+   # Download from https://www.gns3.com/software/download
    ```
 
 2. **MikroTik CHR Image**
 
    ```bash
-   # Download CHR image untuk GNS3
+   # Download CHR image for GNS3
    # https://mikrotik.com/download
    ```
 
-3. **VMware Workstation** (atau VirtualBox)
-   - Untuk menjalankan GNS3 VM
+3. **VMware Workstation** (or VirtualBox)
+   - For running GNS3 VM
 
-### Langkah Instalasi
+### Installation Steps
 
 1. **Clone repository**
 
@@ -358,154 +358,154 @@ add dst-address=0.0.0.0/0 gateway=172.16.0.1
    cd rtrwnet-network-design
    ```
 
-2. **Import Project GNS3**
+2. **Import GNS3 Project**
 
-   - Buka GNS3
+   - Open GNS3
    - File → Import portable project
-   - Pilih file project dari folder `link_gns3_project.md`
+   - Select project file from `link_gns3_project.md` folder
 
-3. **Load Konfigurasi**
+3. **Load Configuration**
 
-   - Konfigurasi sudah tersimpan dalam project
-   - Jika perlu reload manual, copy dari folder `configs/`
-   - Paste ke terminal masing-masing perangkat
+   - Configurations are already saved in the project
+   - For manual reload, copy from `configs/` folder
+   - Paste into respective device terminals
 
-4. **Jalankan Simulasi**
-   - Klik "Start All Nodes" di GNS3
-   - Tunggu semua perangkat booting (~2-3 menit)
-   - Verifikasi konektivitas
+4. **Run Simulation**
+   - Click "Start All Nodes" in GNS3
+   - Wait for all devices to boot (~2-3 minutes)
+   - Verify connectivity
 
-### Perintah Verifikasi
+### Verification Commands
 
 ```bash
-# Cek interface dan IP address
+# Check interfaces and IP addresses
 /ip address print
 
-# Verifikasi VLAN
+# Verify VLAN
 /interface vlan print
 
-# Cek DHCP leases
+# Check DHCP leases
 /ip dhcp-server lease print
 
 # Test routing
 /ip route print
 
-# Monitoring bandwidth (real-time)
+# Monitor bandwidth (real-time)
 /queue simple print stats
 
-# Test konektivitas
+# Test connectivity
 /ping 172.16.0.1
 /ping 8.8.8.8
 ```
 
 ---
 
-## 📂 Struktur Project
+## 📂 Project Structure
 
 ```
 rtrwnet-network-design/
-├── README.md                              # Dokumentasi project
-├── link_gns3_project.md                   # Link download project GNS3
-├── configs/                               # Konfigurasi perangkat
-│   ├── MikroTik-RB4011iGS+RM-1.rsc       # Router inti (DESA)
-│   ├── MikroTik-RB750Gr3.rsc             # Router gateway (KOTA)
-│   ├── MikroTik-LHGXL5ac-1.rsc           # PtP transmitter (KOTA)
-│   └── MikroTik-LHGXL5ac-2.rsc           # PtP receiver (DESA)
-├── diagrams/                              # Diagram topologi
+├── README.md                              # Project documentation
+├── link_gns3_project.md                   # GNS3 project download link
+├── configs/                               # Device configurations
+│   ├── MikroTik-RB4011iGS+RM-1.rsc       # Core router (VILLAGE)
+│   ├── MikroTik-RB750Gr3.rsc             # Gateway router (CITY)
+│   ├── MikroTik-LHGXL5ac-1.rsc           # PtP transmitter (CITY)
+│   └── MikroTik-LHGXL5ac-2.rsc           # PtP receiver (VILLAGE)
+├── diagrams/                              # Topology diagrams
 │   ├── Desain_Topologi_Konseptual.jpg
 │   └── Implementasi_Topologi_GNS3.png
-└── doc/                                   # Dokumentasi lengkap
+└── doc/                                   # Complete documentation
     └── Full_Documentation_Portfolio_RTRWNet.pdf
 ```
 
 ---
 
-## 🧪 Hasil Pengujian
+## 🧪 Testing Results
 
-### ✅ Pengujian DHCP & Alokasi IP
+### ✅ DHCP & IP Allocation Testing
 
-**Test**: PC user terhubung ke VLAN 20 dan mendapatkan IP otomatis
+**Test**: User PC connected to VLAN 20 and receives automatic IP
 
-**Hasil**:
+**Result**:
 
-- IP diterima dari pool: `172.16.1.2 - 172.16.1.254`
+- IP received from pool: `172.16.1.2 - 172.16.1.254`
 - Gateway: `172.16.1.1`
 - DNS: `8.8.8.8`, `1.1.1.1`
 
-### ✅ Pengujian Konektivitas Internet
+### ✅ Internet Connectivity Testing
 
-**Test**: Ping ke DNS publik Google
+**Test**: Ping to Google public DNS
 
 ```bash
 ping 8.8.8.8
 # Result: 64 bytes from 8.8.8.8: icmp_seq=1 ttl=56 time=12.3 ms
 ```
 
-**Status**: ✅ Koneksi internet berhasil
+**Status**: ✅ Internet connection successful
 
-### ✅ Pengujian Manajemen Bandwidth (QoS)
+### ✅ Bandwidth Management Testing (QoS)
 
-**Kondisi**: 4 host aktif dengan PCQ rate 140k download / 46k upload
+**Condition**: 4 active hosts with PCQ rate 140k download / 46k upload
 
-**Test**: Speedtest pada setiap user
+**Test**: Speedtest on each user
 
-| Metrik     | Sebelum QoS  | Setelah QoS (4 user aktif) |
-| ---------- | ------------ | -------------------------- |
-| Download   | ~560 kbps    | ~140 kbps/user             |
-| Upload     | ~920 kbps    | ~46 kbps/user              |
-| Distribusi | Tidak merata | Merata semua user          |
+| Metric       | Before QoS | After QoS (4 active users) |
+| ------------ | ---------- | -------------------------- |
+| Download     | ~560 kbps  | ~140 kbps/user             |
+| Upload       | ~920 kbps  | ~46 kbps/user              |
+| Distribution | Uneven     | Even for all users         |
 
-**Hasil**: ✅ Bandwidth terbagi rata sesuai konfigurasi PCQ
+**Result**: ✅ Bandwidth fairly distributed according to PCQ configuration
 
-### 📊 Kesimpulan Pengujian
+### 📊 Testing Conclusion
 
-Seluruh konfigurasi berjalan sesuai perancangan:
+All configurations work as designed:
 
-- ✅ DHCP Server berfungsi normal
-- ✅ Konektivitas internet stabil
-- ✅ QoS dengan PCQ membagi bandwidth secara adil
-- ✅ VLAN isolation bekerja dengan baik
-- ✅ Bridge mode PtP transparan untuk semua traffic
-
----
-
-## 📚 Dokumentasi Lengkap
-
-### Dokumen Teknis Lengkap
-
-Untuk pemahaman mendalam tentang:
-
-- **Landasan Teori**: Konsep RT/RW Net, jaringan komputer, DNS, VLAN
-- **Perancangan Detail**: Pemilihan perangkat, estimasi biaya
-- **Konfigurasi Step-by-Step**: Panduan lengkap dengan screenshot
-- **Analisis Hasil**: Testing dan troubleshooting
-
-📄 **Lihat**: [`doc/Full_Documentation_Portfolio_RTRWNet.pdf`](doc/Full_Documentation_Portfolio_RTRWNet.pdf)
+- ✅ DHCP Server functioning normally
+- ✅ Internet connectivity stable
+- ✅ QoS with PCQ distributes bandwidth fairly
+- ✅ VLAN isolation working properly
+- ✅ PtP bridge mode transparent for all traffic
 
 ---
 
-## 🎓 Pembelajaran Kunci
+## 📚 Complete Documentation
 
-Project ini mendemonstrasikan:
+### Comprehensive Technical Documentation
 
-1. **Wireless Networking**: Implementasi PtP backbone untuk jarak jauh
-2. **Bridge Mode**: Layer 2 transparency untuk VLAN traffic
-3. **QoS Management**: PCQ untuk pembagian bandwidth yang adil dan dinamis
-4. **Network Segmentation**: VLAN untuk isolasi manajemen dan pengguna
-5. **Scalable Design**: Arsitektur yang mendukung ekspansi pengguna
-6. **Community Networking**: Konsep distribusi internet berbasis komunitas
+For in-depth understanding of:
 
----
+- **Theoretical Foundation**: RT/RW Net concept, computer networking, DNS, VLAN
+- **Detailed Design**: Device selection, cost estimation
+- **Step-by-Step Configuration**: Complete guide with screenshots
+- **Results Analysis**: Testing and troubleshooting
 
-## 💡 Inspirasi & Konteks
-
-Project ini terinspirasi dari implementasi nyata RT/RW Net di Indonesia, khususnya penelitian dari **Husaini & Sari (Universitas Muhammadiyah Sumatera Utara)** tentang implementasi RT/RW Net di Dusun V Suka Damai, Desa Sei Meran.
-
-RT/RW Net membuktikan bahwa inovasi jaringan dapat memberikan **dampak sosial langsung** dengan menyediakan akses internet terjangkau bagi masyarakat, menjadi solusi cerdas di tengah keterbatasan infrastruktur.
+📄 **View**: [`doc/Full_Documentation_Portfolio_RTRWNet.pdf`](doc/Full_Documentation_Portfolio_RTRWNet.pdf)
 
 ---
 
-## 👤 Pembuat
+## 🎓 Key Learnings
+
+This project demonstrates:
+
+1. **Wireless Networking**: Long-distance PtP backbone implementation
+2. **Bridge Mode**: Layer 2 transparency for VLAN traffic
+3. **QoS Management**: PCQ for fair and dynamic bandwidth distribution
+4. **Network Segmentation**: VLAN for management and user isolation
+5. **Scalable Design**: Architecture that supports user expansion
+6. **Community Networking**: Community-based internet distribution concept
+
+---
+
+## 💡 Inspiration & Context
+
+This project is inspired by real-world RT/RW Net implementations in Indonesia, particularly research by **Husaini & Sari (Muhammadiyah University of North Sumatra)** on RT/RW Net implementation in Dusun V Suka Damai, Desa Sei Meran.
+
+RT/RW Net proves that network innovation can provide **direct social impact** by providing affordable internet access to communities, becoming a smart solution amid infrastructure limitations.
+
+---
+
+## 👤 Author
 
 **Ahmad Syafi Nurroyyan**
 
@@ -515,32 +515,32 @@ RT/RW Net membuktikan bahwa inovasi jaringan dapat memberikan **dampak sosial la
 
 ---
 
-## 📄 Lisensi
+## 📄 License
 
-Project ini tersedia untuk tujuan **edukasi dan portfolio**. Silakan gunakan sebagai referensi untuk implementasi RT/RW Net atau project network engineering Anda.
+This project is available for **educational and portfolio purposes**. Feel free to use as a reference for RT/RW Net implementation or your network engineering projects.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Pak Onno W. Purbo** - Pioneer dan inspirator RT/RW Net Indonesia
-- **MikroTik** - Platform RouterOS yang powerful dan fleksibel
-- **GNS3 Community** - Platform simulasi jaringan yang excellent
-- **Peneliti UMM (1996)** - Penggagas konsep RT/RW Net pertama di Indonesia
-- **Komunitas RT/RW Net Indonesia** - Untuk berbagi pengetahuan dan pengalaman
+- **Mr. Onno W. Purbo** - Pioneer and inspiration for RT/RW Net in Indonesia
+- **MikroTik** - Powerful and flexible RouterOS platform
+- **GNS3 Community** - Excellent network simulation platform
+- **UMM Researchers (1996)** - Pioneers of the first RT/RW Net concept in Indonesia
+- **Indonesian RT/RW Net Community** - For sharing knowledge and experience
 
 ---
 
-## 📞 Kontak & Kolaborasi
+## 📞 Contact & Collaboration
 
-Tertarik untuk berdiskusi tentang network engineering, RT/RW Net, atau kolaborasi project?
+Interested in discussing network engineering, RT/RW Net, or project collaboration?
 
-Jangan ragu untuk menghubungi! 🚀
-
----
-
-**⭐ Jika project ini bermanfaat, pertimbangkan untuk memberikan star!**
+Feel free to reach out! 🚀
 
 ---
 
-_Terakhir Diperbarui: Januari 2026_
+**⭐ If this project is helpful, please consider giving it a star!**
+
+---
+
+_Last Updated: January 2026_
