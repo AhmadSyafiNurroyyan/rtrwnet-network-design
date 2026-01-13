@@ -412,8 +412,8 @@ rtrwnet-network-design/
 │   ├── MikroTik-LHGXL5ac-1.rsc           # PtP transmitter (CITY)
 │   └── MikroTik-LHGXL5ac-2.rsc           # PtP receiver (VILLAGE)
 ├── diagrams/                              # Topology diagrams
-│   ├── Desain_Topologi_Konseptual.jpg
-│   └── Implementasi_Topologi_GNS3.png
+│   ├── Topology Design.jpg
+│   └── Topology Implementation in GNS3.png
 └── doc/                                   # Complete documentation
     └── Full_Documentation_Portfolio_RTRWNet.pdf
 ```
